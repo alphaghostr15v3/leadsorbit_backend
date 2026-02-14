@@ -323,4 +323,14 @@ class ContentController extends Controller
         $member->delete();
         return response()->json(['message' => 'Deleted successfully']);
     }
+
+    // Leads / Contacts
+    public function getLeads() {
+        return response()->json(\App\Models\Lead::latest()->get());
+    }
+
+    public function deleteLead($id) {
+        \App\Models\Lead::findOrFail($id)->delete();
+        return response()->json(['message' => 'Inquiry deleted successfully']);
+    }
 }

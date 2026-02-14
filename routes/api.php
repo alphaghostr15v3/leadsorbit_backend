@@ -44,4 +44,8 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     Route::post('/team', [ContentController::class, 'storeTeamMember']);
     Route::put('/team/{id}', [ContentController::class, 'updateTeamMember']);
     Route::delete('/team/{id}', [ContentController::class, 'deleteTeamMember']);
+
+    // Leads
+    Route::get('/leads', [ContentController::class, 'getLeads']);
+    Route::delete('/leads/{id}', [ContentController::class, 'deleteLead']);
 });
