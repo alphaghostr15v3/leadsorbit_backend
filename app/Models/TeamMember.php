@@ -17,6 +17,7 @@ class TeamMember extends Model
         'linkedin',
         'twitter',
         'github',
+        'cv_url',
         'order'
     ];
 }

@@ -54,6 +54,9 @@ class ContentController extends Controller
             if ($m->image_url && !filter_var($m->image_url, FILTER_VALIDATE_URL)) {
                 $m->image_url = asset($m->image_url);
             }
+            if ($m->cv_url && !filter_var($m->cv_url, FILTER_VALIDATE_URL)) {
+                $m->cv_url = asset($m->cv_url);
+            }
             return $m;
         });
         return response()->json($members);
@@ -266,7 +269,8 @@ class ContentController extends Controller
             'twitter' => 'nullable|string',
             'github' => 'nullable|string',
             'order' => 'nullable|integer',
-            'image' => 'nullable|image|max:5120'
+            'image' => 'nullable|image|max:5120',
+            'cv' => 'nullable|file|mimes:pdf,doc,docx|max:10240'
         ]);
 
         $data = $validated;
@@ -277,7 +281,15 @@ class ContentController extends Controller
             $data['image_url'] = '/uploads/team/' . $name;
         }
 
+        if ($request->hasFile('cv')) {
+            $file = $request->file('cv');
+            $name = time() . '_cv_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/team/cv'), $name);
+            $data['cv_url'] = '/uploads/team/cv/' . $name;
+        }
+
         unset($data['image']);
+        unset($data['cv']);
         return response()->json(TeamMember::create($data), 201);
     }
 
@@ -291,7 +303,8 @@ class ContentController extends Controller
             'twitter' => 'nullable|string',
             'github' => 'nullable|string',
             'order' => 'nullable|integer',
-            'image' => 'nullable' // File or string
+            'image' => 'nullable', // File or string
+            'cv' => 'nullable' // File or string
         ]);
 
         $data = $validated;
@@ -307,7 +320,20 @@ class ContentController extends Controller
             $data['image_url'] = '/uploads/team/' . $name;
         }
 
+        if ($request->hasFile('cv')) {
+            // Delete old CV
+            if ($member->cv_url && file_exists(public_path($member->cv_url))) {
+                @unlink(public_path($member->cv_url));
+            }
+
+            $file = $request->file('cv');
+            $name = time() . '_cv_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/team/cv'), $name);
+            $data['cv_url'] = '/uploads/team/cv/' . $name;
+        }
+
         unset($data['image']);
+        unset($data['cv']);
         $member->update($data);
         return response()->json($member);
     }
@@ -318,6 +344,11 @@ class ContentController extends Controller
         // Delete image file
         if ($member->image_url && file_exists(public_path($member->image_url))) {
             @unlink(public_path($member->image_url));
+        }
+
+        // Delete CV file
+        if ($member->cv_url && file_exists(public_path($member->cv_url))) {
+            @unlink(public_path($member->cv_url));
         }
 
         $member->delete();
