@@ -270,6 +270,7 @@ class ContentController extends Controller
             'github' => 'nullable|string',
             'facebook' => 'nullable|string',
             'instagram' => 'nullable|string',
+            'profile_url' => 'nullable|string',
             'order' => 'nullable|integer',
             'image' => 'nullable|image|max:5120',
             'cv' => 'nullable|file|mimes:pdf,doc,docx|max:10240'
@@ -306,6 +307,7 @@ class ContentController extends Controller
             'github' => 'nullable|string',
             'facebook' => 'nullable|string',
             'instagram' => 'nullable|string',
+            'profile_url' => 'nullable|string',
             'order' => 'nullable|integer',
             'image' => 'nullable', // File or string
             'cv' => 'nullable' // File or string

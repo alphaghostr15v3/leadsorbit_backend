@@ -19,6 +19,7 @@ class TeamMember extends Model
         'github',
         'facebook',
         'instagram',
+        'profile_url',
         'cv_url',
         'order'
     ];
