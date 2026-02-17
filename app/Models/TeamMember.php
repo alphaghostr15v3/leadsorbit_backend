@@ -17,6 +17,8 @@ class TeamMember extends Model
         'linkedin',
         'twitter',
         'github',
+        'facebook',
+        'instagram',
         'cv_url',
         'order'
     ];

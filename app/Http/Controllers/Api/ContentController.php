@@ -268,6 +268,8 @@ class ContentController extends Controller
             'linkedin' => 'nullable|string',
             'twitter' => 'nullable|string',
             'github' => 'nullable|string',
+            'facebook' => 'nullable|string',
+            'instagram' => 'nullable|string',
             'order' => 'nullable|integer',
             'image' => 'nullable|image|max:5120',
             'cv' => 'nullable|file|mimes:pdf,doc,docx|max:10240'
@@ -302,6 +304,8 @@ class ContentController extends Controller
             'linkedin' => 'nullable|string',
             'twitter' => 'nullable|string',
             'github' => 'nullable|string',
+            'facebook' => 'nullable|string',
+            'instagram' => 'nullable|string',
             'order' => 'nullable|integer',
             'image' => 'nullable', // File or string
             'cv' => 'nullable' // File or string
