@@ -17,3 +17,9 @@ Route::get('/', function () {
     }
     return redirect()->route('login');
 });
+
+// React Admin Catch-all
+Route::get('/admin/{any?}', function () {
+    return file_get_contents(public_path('admin/index.html'));
+})->where('any', '.*');
+

@@ -15,7 +15,7 @@
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block z-10">
                     @auth
-                        <a href="http://localhost:5173/admin" class="text-sm text-gray-700 dark:text-gray-500 underline">Go to React Admin</a>
+                        <a href="/admin" class="text-sm text-gray-700 dark:text-gray-500 underline">Go to React Admin</a>
                     @else
                         <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
