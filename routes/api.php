@@ -14,12 +14,15 @@ Route::get('/team', [ContentController::class, 'getTeam']);
 Route::post('/leads', [ContentController::class, 'storeLead']);
 
 // Auth routes
-Route::post('/login', [ApiAuthController::class, 'login']);
-Route::post('/logout', [ApiAuthController::class, 'logout'])->middleware('auth:sanctum');
-Route::get('/user', [ApiAuthController::class, 'me'])->middleware('auth:sanctum');
+Route::middleware('web')->group(function () {
+    Route::post('/login', [ApiAuthController::class, 'login']);
+    Route::post('/logout', [ApiAuthController::class, 'logout'])->middleware('auth:sanctum');
+    Route::get('/user', [ApiAuthController::class, 'me'])->middleware('auth:sanctum');
+});
+
 
 // Protected Admin CRUD routes
-Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
+Route::middleware(['web', 'auth:sanctum'])->prefix('admin')->group(function () {
     // Services
     Route::post('/services', [ContentController::class, 'storeService']);
     Route::put('/services/{id}', [ContentController::class, 'updateService']);
@@ -49,3 +52,4 @@ Route::prefix('admin')->middleware('auth:sanctum')->group(function () {
     Route::get('/leads', [ContentController::class, 'getLeads']);
     Route::delete('/leads/{id}', [ContentController::class, 'deleteLead']);
 });
+
