@@ -8,12 +8,9 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Redirect root to login
-Route::get('/', function () {
-    if (Auth::check()) {
-        return view('welcome', [
-            'portfolioItems' => \App\Models\PortfolioItem::all()
-        ]);
-    }
-    return redirect()->route('login');
-});
+// React SPA Catch-all
+Route::get('/{any?}', function () {
+    return view('spa');
+})->where('any', '.*');
+
+
